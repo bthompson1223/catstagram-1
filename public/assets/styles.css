@@ -1,0 +1,29 @@
+* {
+  box-sizing: border-box;
+}
+
+#window-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.page-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.kitten-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  border: 2px blue solid;
+}
+
+.kitten-img {
+  width: auto;
+  max-height: 500px;
+}
