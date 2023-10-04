@@ -1,11 +1,14 @@
-export const comments = () => {
+export const comments = async (count) => {
+  const thisCount = count;
   const commentContainer = document.createElement("div");
   const addContainer = document.createElement("div");
   const commentsBucket = document.createElement("div");
   const addComment = document.createElement("input");
   const comments = document.createElement("ol");
   const addButton = document.createElement("button");
-  const kittenContainer = document.querySelector(".kitten-container");
+  const kittenContainer = document.querySelector(
+    `#kitten-container${thisCount}`
+  );
   const first = document.createElement("li");
 
   addComment.type = "text";
@@ -22,8 +25,10 @@ export const comments = () => {
 
   addButton.addEventListener("click", () => {
     const li = document.createElement("li");
+    const p = document.createElement("p");
     li.className = "comment";
-    li.innerText = addComment.value;
+    p.innerText = addComment.value;
+    li.appendChild(p);
     console.log(addComment.value);
     // li.style.listStyle = "none";
     comments.appendChild(li);

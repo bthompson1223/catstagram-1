@@ -1,4 +1,8 @@
-export async function kitten() {
+import { voting } from "./voting.js";
+import { comments } from "./comments.js";
+
+export async function kitten(count) {
+  const thisCount = count;
   let url = await fetchKitten();
   url = url[0].url;
 
@@ -7,13 +11,16 @@ export async function kitten() {
   const img = document.createElement("img");
   const windowContainer = document.getElementById("window-container");
 
-  kittenContainer.className = "kitten-container";
-  header.className = "header";
-  header.innerText = `Kitten Picture!!!`;
-  img.className = "kitten-img";
+  kittenContainer.id = `kitten-container${thisCount}`;
+  header.id = `header${thisCount}`;
+  header.innerText = `Kitten Picture ${thisCount}!!!`;
+  img.id = `kitten-img${thisCount}`;
   img.setAttribute("src", url);
 
   kittenContainer.append(header, img);
+
+  setTimeout(voting, 500, thisCount);
+  setTimeout(comments, 500, thisCount);
 
   windowContainer.append(kittenContainer);
 }
