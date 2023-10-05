@@ -1,6 +1,13 @@
+import { comments } from "./comments.js";
+
 export const voting = async (count) => {
   const thisCount = count;
-  let points = 0;
+  let points;
+  window["points" + thisCount] = thisCount;
+  if (!localStorage.getItem(`points${thisCount}`)) {
+    points = 0;
+    localStorage.setItem(`points${thisCount}`, points);
+  } else points = localStorage.getItem(`points${thisCount}`);
   const scoreContainer = document.createElement("div");
   const score = document.createElement("p");
   const popScoreContainer = document.createElement("div");
@@ -9,7 +16,7 @@ export const voting = async (count) => {
 
   scoreContainer.className = "score-container";
   popScoreContainer.id = `popularity${thisCount}`;
-  score.className = "score";
+  score.id = `score${thisCount}`;
   score.innerText = `Popularity Points: ${points}`;
   upVoteButton.className = "upvote";
   upVoteButton.innerText = "Upvote!";
@@ -26,10 +33,12 @@ export const voting = async (count) => {
     const img = document.querySelector(`#kitten-img${thisCount}`);
     const url = await data[0].url;
     img.setAttribute("src", url);
-    const comments = document.querySelectorAll(`.comment${thisCount}`);
+    const comments = document.querySelectorAll(`#comments${thisCount} > li`);
+    const commentBox = document.querySelector(`#comments${thisCount}`);
     points = 0;
-    score.innerText = `Popularity Points: ${points}`;
+    score.innerText = `Popularity Points: 0`;
     comments.forEach((comment) => comment.remove());
+    localStorage.setItem(`points${thisCount}`, 0);
   });
 
   //   kittenContainer.forEach((kitten) => console.log("kitten ", kitten));
@@ -44,10 +53,11 @@ export const voting = async (count) => {
 
   function addPoints() {
     points += 1;
-
+    localStorage.setItem(`points${thisCount}`, points);
     score.innerText = `Popularity Points: ${points}`;
     return points;
   }
+  await comments(thisCount);
 };
 
 function fetchKitten() {
