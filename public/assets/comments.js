@@ -27,7 +27,9 @@ export const comments = async (count) => {
   if (localStorage.getItem(`comments${thisCount}`)) {
     let oldComments = localStorage.getItem(`comments${thisCount}`);
     let oldCommentsArr = oldComments.split(",");
-    oldCommentsArr.forEach((comment) => appendOldComments(comment));
+    oldCommentsArr.forEach((comment) => {
+      if (comment) appendOldComments(comment);
+    });
   } else localStorage.setItem(`comments${thisCount}`, "");
 
   addContainer.append(addComment, addButton);
@@ -55,7 +57,10 @@ export const comments = async (count) => {
       if (localStorage.getItem(`comments${thisCount}`)) {
         let newCom = localStorage.getItem(`comments${thisCount}`).split(",");
         for (let i = 0; i < newCom.length; i++) {
-          if (newCom[i].id === li.id) newCom.splice(i, 1);
+          console.log(newCom);
+          if (newCom[i].id === li.id) {
+            newCom.splice(i, 1);
+          }
         }
       }
       deleted.remove();

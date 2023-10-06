@@ -3,11 +3,7 @@ import { comments } from "./comments.js";
 export const voting = async (count) => {
   const thisCount = count;
   let points;
-  window["points" + thisCount] = thisCount;
-  if (!localStorage.getItem(`points${thisCount}`)) {
-    points = 0;
-    localStorage.setItem(`points${thisCount}`, points);
-  } else points = localStorage.getItem(`points${thisCount}`);
+
   const scoreContainer = document.createElement("div");
   const score = document.createElement("p");
   const popScoreContainer = document.createElement("div");
@@ -17,6 +13,15 @@ export const voting = async (count) => {
   scoreContainer.className = "score-container";
   popScoreContainer.id = `popularity${thisCount}`;
   score.id = `score${thisCount}`;
+
+  if (!localStorage.getItem(`points${thisCount}`)) {
+    points = 0;
+    localStorage.setItem(`points${thisCount}`, points);
+  } else {
+    const catcher = localStorage.getItem(`points${thisCount}`);
+    points = parseInt(catcher);
+  }
+
   score.innerText = `Popularity Points: ${points}`;
   upVoteButton.className = "upvote";
   upVoteButton.innerText = "Upvote!";
@@ -32,13 +37,15 @@ export const voting = async (count) => {
     const data = await fetchKitten();
     const img = document.querySelector(`#kitten-img${thisCount}`);
     const url = await data[0].url;
+    localStorage.setItem(`kittenimg${thisCount}`, url);
     img.setAttribute("src", url);
     const comments = document.querySelectorAll(`#comments${thisCount} > li`);
     const commentBox = document.querySelector(`#comments${thisCount}`);
     points = 0;
-    score.innerText = `Popularity Points: 0`;
+    score.innerText = `Popularity Points: ${points}`;
     comments.forEach((comment) => comment.remove());
     localStorage.setItem(`points${thisCount}`, 0);
+    localStorage.setItem(`comments${thisCount}`, "");
   });
 
   //   kittenContainer.forEach((kitten) => console.log("kitten ", kitten));
@@ -60,7 +67,7 @@ export const voting = async (count) => {
   await comments(thisCount);
 };
 
-function fetchKitten() {
+async function fetchKitten() {
   return fetch("https://api.thecatapi.com/v1/images/search")
     .then((res) => res.json())
     .then((data) => data);
