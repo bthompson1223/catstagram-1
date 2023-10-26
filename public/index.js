@@ -8,6 +8,14 @@ const initializePage = async () => {
   await kitten(count);
   count++;
   await kitten(count);
+  count++;
+  await kitten(count);
+  count++;
+  await kitten(count);
+  count++;
+  await kitten(count);
+  count++;
+  await kitten(count);
 };
 
 window.onload = initializePage;
