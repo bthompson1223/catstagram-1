@@ -34,18 +34,21 @@ export const voting = async (count) => {
   //   });
 
   downVoteButton.addEventListener("click", async () => {
-    const data = await fetchKitten();
-    const img = document.querySelector(`#kitten-img${thisCount}`);
-    const url = await data[0].url;
-    localStorage.setItem(`kittenimg${thisCount}`, url);
-    img.setAttribute("src", url);
-    const comments = document.querySelectorAll(`#comments${thisCount} > li`);
-    const commentBox = document.querySelector(`#comments${thisCount}`);
-    points = 0;
-    score.innerText = `Popularity Points: ${points}`;
-    comments.forEach((comment) => comment.remove());
-    localStorage.setItem(`points${thisCount}`, 0);
-    localStorage.setItem(`comments${thisCount}`, "");
+    const point = score.innerText.split(" ")[2];
+    if (point > 0) {
+      const data = await fetchKitten(thisCount);
+      const img = document.querySelector(`#kitten-img${thisCount}`);
+      // const url = await data[0].url;
+      localStorage.setItem(`kittenimg${thisCount}`, data);
+      img.setAttribute("src", data);
+      const comments = document.querySelectorAll(`#comments${thisCount} > li`);
+      const commentBox = document.querySelector(`#comments${thisCount}`);
+      points = 0;
+      score.innerText = `Popularity Points: ${points}`;
+      comments.forEach((comment) => comment.remove());
+      localStorage.setItem(`points${thisCount}`, 0);
+      localStorage.setItem(`comments${thisCount}`, "");
+    }
   });
 
   //   kittenContainer.forEach((kitten) => console.log("kitten ", kitten));
@@ -67,8 +70,25 @@ export const voting = async (count) => {
   await comments(thisCount);
 };
 
-async function fetchKitten() {
-  return fetch("https://api.thecatapi.com/v1/images/search")
-    .then((res) => res.json())
-    .then((data) => data);
+async function fetchKitten(num) {
+  try {
+    // const kittenResponse = await fetch(
+    //   "https://api.thecatapi.com/v1/images/search?size=small"
+    // );
+    let id = Math.floor(Math.random() * 1021) + 1;
+    const pokemon = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
+    const data = await pokemon.json();
+    console.log(data);
+    const pokeURL = data.sprites["front_default"];
+    console.log(pokeURL);
+
+    // const kittenData = await kittenResponse.json();
+    // console.log("kitten data ", kittenData);
+    // const kittenImgUrl = kittenData[0].url;
+
+    localStorage.setItem(`kittenimg${num}`, pokeURL);
+    return pokeURL;
+  } catch (e) {
+    console.log("Failed to fetch image", e);
+  }
 }

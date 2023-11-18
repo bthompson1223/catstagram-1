@@ -16,6 +16,7 @@ export const comments = async (count) => {
   addComment.className = "add-comment";
   addContainer.className = "add-container";
   addButton.innerText = "Add Comment";
+  addButton.className = "add-button";
 
   comments.id = `comments${thisCount}`;
   commentContainer.className = "comments";
@@ -36,14 +37,12 @@ export const comments = async (count) => {
   function addButtonEvent() {
     const li = document.createElement("li");
     const p = document.createElement("p");
-    const deleteComment = document.createElement("button");
-    deleteComment.innerText = "Delete Comment";
-    deleteComment.id = `delete${thatCount}`;
+
     li.id = `comment${thatCount}`;
     li.className = "comment";
     p.innerText = addComment.value;
     li.appendChild(p);
-    p.appendChild(deleteComment);
+
     // li.style.listStyle = "none";
     comments.appendChild(li);
     addComment.value = "";
@@ -71,9 +70,9 @@ export const comments = async (count) => {
   function appendOldComments(value) {
     const li = document.createElement("li");
     const p = document.createElement("p");
-    const deleteComment = document.createElement("button");
-    deleteComment.innerText = "Delete Comment";
-    deleteComment.id = `delete${thatCount}`;
+    // const deleteComment = document.createElement("button");
+    // deleteComment.innerText = "Delete Comment";
+    // deleteComment.id = `delete${thatCount}`;
     li.id = `comment${thatCount}`;
     li.className = "comment";
     let valArr = value.split("D");
@@ -86,20 +85,20 @@ export const comments = async (count) => {
       }
     }
     li.appendChild(p);
-    p.appendChild(deleteComment);
+    // p.appendChild(deleteComment);
     // li.style.listStyle = "none";
     comments.appendChild(li);
     addComment.value = "";
-    deleteComment.addEventListener("click", () => {
-      let deleted = document.getElementById(li.id);
-      if (localStorage.getItem(`comments${thisCount}`)) {
-        let newCom = localStorage.getItem(`comments${thisCount}`).split(",");
-        for (let i = 0; i < newCom.length; i++) {
-          if (newCom[i].id === li.id) newCom.splice(i, 1);
-        }
-      }
-      deleted.remove();
-    });
+    // deleteComment.addEventListener("click", () => {
+    //   let deleted = document.getElementById(li.id);
+    //   if (localStorage.getItem(`comments${thisCount}`)) {
+    //     let newCom = localStorage.getItem(`comments${thisCount}`).split(",");
+    //     for (let i = 0; i < newCom.length; i++) {
+    //       if (newCom[i].id === li.id) newCom.splice(i, 1);
+    //     }
+    //   }
+    //   deleted.remove();
+    // });
     thatCount++;
   }
 };

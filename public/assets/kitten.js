@@ -12,7 +12,7 @@ export async function kitten(count) {
 
   kittenContainer.id = `kitten-container${thisCount}`;
   header.id = `header${thisCount}`;
-  header.innerText = `Kitten Picture ${thisCount}!!!`;
+  header.innerText = `Pokémon Team Member ${thisCount}!!!`;
   img.id = `kitten-img${thisCount}`;
 
   if (url) img.src = url;
@@ -34,13 +34,19 @@ export async function kitten(count) {
       const kittenResponse = await fetch(
         "https://api.thecatapi.com/v1/images/search?size=small"
       );
+      let id = Math.floor(Math.random() * 1021) + 1;
+      const pokemon = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
+      const data = await pokemon.json();
+      console.log(data);
+      const pokeURL = data.sprites["front_default"];
+      console.log(pokeURL);
 
       const kittenData = await kittenResponse.json();
       console.log("kitten data ", kittenData);
       const kittenImgUrl = kittenData[0].url;
 
-      localStorage.setItem(`kittenimg${thisCount}`, kittenImgUrl);
-      return kittenImgUrl;
+      localStorage.setItem(`kittenimg${thisCount}`, pokeURL);
+      return pokeURL;
     } catch (e) {
       console.log("Failed to fetch image", e);
     }
@@ -52,14 +58,39 @@ export async function fetchKitten() {
     const kittenResponse = await fetch(
       "https://api.thecatapi.com/v1/images/search?size=small"
     );
+    let id = Math.floor(Math.random() * 1021) + 1;
+    const pokemon = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
+    const data = await pokemon.json();
+    console.log(data);
+    const pokeURL = data.sprites["front_default"];
+    console.log(pokeURL);
 
     const kittenData = await kittenResponse.json();
     console.log("kitten data ", kittenData);
     const kittenImgUrl = kittenData[0].url;
 
-    localStorage.setItem(`kittenimg${thisCount}`, kittenImgUrl);
-    return kittenImgUrl;
+    localStorage.setItem(`kittenimg${thisCount}`, pokeURL);
+    return pokeURL;
   } catch (e) {
     console.log("Failed to fetch image", e);
   }
 }
+
+/*
+async getOnePokemon() {
+      try {
+        let id = Math.floor(Math.random() * 151) + 1;
+        let response = await axios.get(`${apiLink}/pokemon/${id}`)
+        if(response.data){
+          let pokemon = {
+            id: response.data.id,
+            name: response.data.name,
+            image: response.data.sprites.front_default
+          }
+          return pokemon
+        }
+      } catch (error) {
+        console.log(error)
+      }
+    }
+*/
