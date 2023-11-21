@@ -60,6 +60,10 @@ export async function fetchKitten() {
     );
     let id = Math.floor(Math.random() * 1021) + 1;
     const pokemon = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
+    console.log("poke obj =>", pokemon);
+    const moves = [];
+    pokemon.moves.forEach((move) => moves.push(move));
+    console.log("moves =>", moves);
     const data = await pokemon.json();
     console.log(data);
     const pokeURL = data.sprites["front_default"];

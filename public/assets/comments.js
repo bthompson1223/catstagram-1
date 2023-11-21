@@ -25,13 +25,15 @@ export const comments = async (count) => {
   kittenContainer.append(commentContainer);
 
   addButton.addEventListener("click", addButtonEvent);
-  if (localStorage.getItem(`comments${thisCount}`)) {
-    let oldComments = localStorage.getItem(`comments${thisCount}`);
-    let oldCommentsArr = oldComments.split(",");
-    oldCommentsArr.forEach((comment) => {
-      if (comment) appendOldComments(comment);
-    });
-  } else localStorage.setItem(`comments${thisCount}`, "");
+  if (addComment.value) {
+    if (localStorage.getItem(`comments${thisCount}`)) {
+      let oldComments = localStorage.getItem(`comments${thisCount}`);
+      let oldCommentsArr = oldComments.split(",");
+      oldCommentsArr.forEach((comment) => {
+        if (comment) appendOldComments(comment);
+      });
+    } else localStorage.setItem(`comments${thisCount}`, "");
+  }
 
   addContainer.append(addComment, addButton);
   function addButtonEvent() {
