@@ -1,4 +1,5 @@
 import { kitten } from "./assets/kitten.js";
+import { initializeChat } from "./assets/chat.js";
 
 const initializePage = async () => {
   const windowContainer = document.createElement("div");
@@ -44,6 +45,7 @@ const initializePage = async () => {
       // });
     });
   });
+  initializeChat();
 };
 
 async function fetchKitten(num) {

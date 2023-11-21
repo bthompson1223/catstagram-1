@@ -9,6 +9,9 @@ app.use(express.static(__dirname + "/public"));
 
 io.on("connection", (socket) => {
   console.log("A new user connected");
+  socket.on("disconnect", () => {
+    console.log("A user disconnected");
+  });
 });
 
 app.get("/", async (req, res) => {
