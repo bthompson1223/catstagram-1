@@ -1,4 +1,4 @@
-import { kitten } from "./public/assets/kitten.js";
+import { kitten } from "./assets/kitten.js";
 
 const initializePage = async () => {
   const windowContainer = document.createElement("div");
