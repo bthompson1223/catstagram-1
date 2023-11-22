@@ -7,6 +7,15 @@ const io = new Server(server);
 
 app.use(express.static(__dirname + "/public"));
 
+app.get("/", async (req, res) => {
+  try {
+    await res.sendFile(__dirname + "/index.html");
+  } catch (e) {
+    console.log(e);
+    res.sendStatus(e.statusCode || 500);
+  }
+});
+
 io.on("connection", (socket) => {
   console.log("A new user connected");
   socket.on("disconnect", () => {
@@ -14,15 +23,10 @@ io.on("connection", (socket) => {
   });
 });
 
-app.get("/", async (req, res) => {
-  try {
-    console.log("I work!");
-    await res.sendFile(__dirname + "/index.html");
-  } catch (e) {
-    console.log("I don't work!");
-    console.log(e);
-    res.sendStatus(404);
-  }
+io.on("connection", (socket) => {
+  socket.on("chat message", (msg) => {
+    io.emit("chat message", msg);
+  });
 });
 
 server.listen(5000, () => {

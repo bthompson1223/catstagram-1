@@ -9,11 +9,18 @@ export const initializeChat = () => {
   const ul = document.createElement("ul");
   const chatContainer = document.createElement("div");
   const windowContainer = document.getElementById("window-container");
+  const formContainer = document.createElement("div");
+  const chatTitle = document.createElement("h2");
+  const titleContainer = document.createElement("div");
 
   form.id = "chat-form";
   input.id = "chat-input";
   button.id = "chat-submit";
   ul.id = "chat-box";
+  chatContainer.id = "chat-container";
+  formContainer.id = "form-container";
+  titleContainer.id = "title-container";
+  chatTitle.innerText = "Chat It Up!!!";
 
   button.innerText = "Send";
 
@@ -25,7 +32,18 @@ export const initializeChat = () => {
     }
   });
 
+  socket.on("chat message", (msg) => {
+    const item = document.createElement("li");
+    item.setAttribute("class", "chat-message");
+    item.textContent = msg;
+    ul.appendChild(item);
+
+    chatContainer.scrollTop = chatContainer.scrollHeight;
+  });
+
+  titleContainer.appendChild(chatTitle);
   form.append(input, button);
-  chatContainer.append(ul, form);
+  formContainer.append(form);
+  chatContainer.append(titleContainer, ul, formContainer);
   windowContainer.appendChild(chatContainer);
 };
