@@ -1,7 +1,7 @@
 module.exports = {
   development: {
     storage: process.env.DB_FILE, //location of the DB file
-    dialect: "postgreSQL", //specifying RDBMS
+    dialect: "postgreSQL 15", //specifying RDBMS
     seederStorage: "sequelize",
     benchmark: true, //prints execution time to terminal
     logQueryParameters: true, //prints parameters with logged SQL
