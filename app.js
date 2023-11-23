@@ -4,6 +4,8 @@ const http = require("http");
 const server = http.createServer(app);
 const { Server } = require("socket.io");
 const io = new Server(server);
+require("dotenv").config();
+const { Message, User } = require("./db/models");
 
 app.use(express.static(__dirname + "/public"));
 
@@ -13,6 +15,17 @@ app.get("/", async (req, res) => {
   } catch (e) {
     console.log(e);
     res.sendStatus(e.statusCode || 500);
+  }
+});
+
+app.get("/api", async (req, res) => {
+  try {
+    const messages = await Message.findAll({
+      include: User,
+    });
+    res.json(messages);
+  } catch (e) {
+    console.log(e);
   }
 });
 

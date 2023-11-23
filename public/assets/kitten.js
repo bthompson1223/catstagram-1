@@ -39,6 +39,7 @@ export async function kitten(count) {
       const data = await pokemon.json();
       console.log(data);
       const pokeURL = data.sprites["front_default"];
+      const moves = data.moves;
       console.log(pokeURL);
 
       const kittenData = await kittenResponse.json();
@@ -46,7 +47,7 @@ export async function kitten(count) {
       const kittenImgUrl = kittenData[0].url;
 
       localStorage.setItem(`kittenimg${thisCount}`, pokeURL);
-      return pokeURL;
+      return [pokeURL, moves];
     } catch (e) {
       console.log("Failed to fetch image", e);
     }
