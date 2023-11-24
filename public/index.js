@@ -46,6 +46,21 @@ const initializePage = async () => {
     });
   });
   initializeChat();
+
+  const chatBox = document.getElementById("chat-box");
+  const messages = await fetch("/api", {
+    method: "GET",
+  });
+  const messageArr = await messages.json();
+  console.log(messageArr);
+  messageArr.forEach((message) => {
+    const item = document.createElement("li");
+    item.setAttribute("class", "chat-message");
+    item.textContent = `${message.User.userName}: ${message.message}`;
+    console.log(item.textContent);
+    console.log(chatBox);
+    chatBox.appendChild(item);
+  });
 };
 
 async function fetchKitten(num) {
@@ -72,3 +87,19 @@ async function fetchKitten(num) {
 }
 
 window.onload = initializePage;
+window.addEventListener("DOMContentLoaded", async () => {
+  // const chatBox = document.getElementById("chat-box");
+  // const messages = await fetch("/api", {
+  //   method: "GET",
+  // });
+  // const messageArr = await messages.json();
+  // console.log(messageArr);
+  // messageArr.forEach((message) => {
+  //   const item = document.createElement("li");
+  //   item.setAttribute("class", "chat-message");
+  //   item.textContent = `${message.User.userName}: ${message.message}`;
+  //   console.log(item.textContent);
+  //   console.log(chatBox);
+  //   chatBox.appendChild(item);
+  // });
+});
