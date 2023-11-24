@@ -11,9 +11,7 @@ const db = {};
 
 let sequelize;
 if (config.use_env_variable) {
-  sequelize = new Sequelize(
-    "postgres://pokechat_user:6BBkjDoi2Kf1qjg3bSDPHgkNvZj4EfbM@dpg-clfrmcur45ec73btlgt0-a.oregon-postgres.render.com/pokechat"
-  );
+  sequelize = new Sequelize(process.env[config.use_env_variable]);
 } else {
   sequelize = new Sequelize(
     config.database,
