@@ -53,14 +53,15 @@ const initializePage = async () => {
   });
   const messageArr = await messages.json();
   console.log(messageArr);
-  messageArr.forEach((message) => {
+  for (let i = messageArr.length - 1; i >= 0; i--) {
+    const message = messageArr[i];
     const item = document.createElement("li");
     item.setAttribute("class", "chat-message");
     item.textContent = `${message.User.userName}: ${message.message}`;
     console.log(item.textContent);
     console.log(chatBox);
     chatBox.appendChild(item);
-  });
+  }
 };
 
 async function fetchKitten(num) {
