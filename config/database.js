@@ -16,5 +16,8 @@ module.exports = {
     logQueryParameters: true, //prints parameters with logged SQL
     typeValidation: true, //model-level data type validation
     logging: false, // prints SQL to the terminal
+    username: process.env.USER,
+    password: process.env.PASSWORD,
+    host: process.env.HOST,
   },
 };
