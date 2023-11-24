@@ -9,8 +9,7 @@ module.exports = {
     // logging: false // prints SQL to the terminal
   },
   production: {
-    url: process.env.DB_URL
+    url: process.env.DB_URL,
     dialect: "postgres", //specifying RDBMS
-    
   },
 };
