@@ -61,10 +61,6 @@ export const initializeChat = () => {
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
     const message = input.value;
-    if (input.value) {
-      socket.emit("chat message", input.value);
-      input.value = "";
-    }
 
     let formItem = e.currentTarget;
     let url = formItem.action;
@@ -86,6 +82,11 @@ export const initializeChat = () => {
        */
       let responseData = await postFormFieldsAsJson({ url, formData });
 
+      if (input.value) {
+        socket.emit("chat message", input.value);
+        input.value = "";
+      }
+
       //Destructure the response data
       let { serverDataResponse } = responseData;
 
@@ -96,12 +97,18 @@ export const initializeChat = () => {
       console.error(error);
     }
   });
-
-  socket.on("chat message", (msg) => {
+  socket.on("chat message", async (msg) => {
     if (user) {
+      const senderData = await fetch(`/api/message`);
+
+      const senderArr = await senderData.json();
+      console.log("This should be sender name", senderArr.User.userName);
+      let sender = senderArr.User.userName;
+
+      // console.log("sender ", sender.userName);
       const item = document.createElement("li");
       item.setAttribute("class", "chat-message");
-      item.textContent = `${user}: ${msg}`;
+      item.textContent = `${sender}: ${msg}`;
       ul.appendChild(item);
     }
 

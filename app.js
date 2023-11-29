@@ -32,6 +32,29 @@ app.get("/api", async (req, res) => {
   }
 });
 
+app.get("/api/user/:name", async (req, res) => {
+  try {
+    console.log("body =====> ", req.params.name);
+    const userName = await User.findOne({
+      where: {
+        userName: req.params.name,
+      },
+    });
+    res.json(userName);
+  } catch (e) {
+    console.log(e);
+  }
+});
+
+app.get("/api/message", async (req, res) => {
+  const message = await Message.findOne({
+    include: User,
+    order: [["createdAt", "DESC"]],
+  });
+
+  res.json(message);
+});
+
 app.post("/api", async (req, res) => {
   if (req.body.user && req.body.message) {
     console.log("full body", req.body);
@@ -75,6 +98,22 @@ io.on("connection", (socket) => {
     io.emit("chat message", msg);
   });
 });
+
+// io.on("connection", (socket) => {
+//   socket.on("username", (username) => {
+//     socket.emit("connected", username);
+//     console.log(`${username} has connected`);
+
+//     socket.on("message", (message) => {
+//       socket.emit("message", message, username);
+//       console.log(`${username}: ${message}`);
+//     });
+//     socket.on("disconnect", (username) => {
+//       socket.emit("disconnected");
+//       console.log(`${username} has disconnected`);
+//     });
+//   });
+// });
 
 server.listen(5000, () => {
   console.log("Listening on port 5000");
