@@ -16,7 +16,9 @@ export const initializeChat = () => {
   let userNameContainer = document.createElement("div");
   let userName = document.createElement("input");
   const userButton = document.createElement("button");
+  const userTitle = document.createElement("h3");
 
+  userTitle.id = "user-title";
   form.id = "chat-form";
   input.id = "chat-input";
   button.id = "chat-submit";
@@ -34,6 +36,7 @@ export const initializeChat = () => {
 
   button.innerText = "Send";
   userButton.innerText = "Submit";
+  userTitle.innerText = "Please enter a username!!";
 
   userButton.addEventListener("click", async (e) => {
     e.stopPropagation();
@@ -115,7 +118,7 @@ export const initializeChat = () => {
     chatContainer.scrollTop = chatContainer.scrollHeight;
   });
 
-  userNameContainer.append(userName, userButton);
+  userNameContainer.append(userTitle, userName, userButton);
   titleContainer.appendChild(chatTitle);
   form.append(input, button);
   formContainer.append(form);
